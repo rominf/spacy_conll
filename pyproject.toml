@@ -1,0 +1,97 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spacy-conll"
+dynamic = ["version"]
+description = "A custom pipeline component for spaCy that can convert any parsed Doc and its sentences into CoNLL-U format. Also provides a command line entry point."
+readme = "README.md"
+license = "BSD-2-Clause"
+requires-python = ">=3.6"
+authors = [
+    { name = "Bram Vanroy", email = "bramvanroy@hotmail.com" },
+]
+keywords = [
+    "conll",
+    "conllu",
+    "nlp",
+    "parsing",
+    "spacy",
+    "spacy-extension",
+    "spacy_stanza",
+    "spacy_udpipe",
+    "stanza",
+    "tagging",
+    "udpipe",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Text Processing",
+]
+dependencies = [
+    "dataclasses;python_version<'3.7'",
+    "spacy>=3.0.1",
+]
+
+[project.optional-dependencies]
+all = [
+    "pandas",
+    "spacy-stanza>=1.0.0",
+    "spacy-udpipe>=1.0.0",
+]
+dev = [
+    "black",
+    "flake8",
+    "isort",
+    "pandas",
+    "pygments",
+    "pytest",
+    "spacy-stanza>=1.0.0",
+    "spacy-udpipe>=1.0.0",
+]
+parsers = [
+    "spacy-stanza>=1.0.0",
+    "spacy-udpipe>=1.0.0",
+]
+pd = [
+    "pandas",
+]
+
+[project.scripts]
+parse-as-conll = "spacy_conll.cli.parse:main"
+
+[project.entry-points.spacy_factories]
+conll_formatter = "spacy_conll.formatter:create_conll_formatter"
+disable_sbd = "spacy_conll.utils:create_spacy_disable_sentence_segmentation"
+
+[project.urls]
+Homepage = "https://github.com/BramVanroy/spacy_conll"
+Issues = "https://github.com/BramVanroy/spacy_conll/issues"
+Source = "https://github.com/BramVanroy/spacy_conll"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "spacy_conll/version.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/spacy_conll",
+]
+
+[tool.isort]
+ensure_newline_before_comments = true
+default_section = "FIRSTPARTY"
+known_first_party = "spacy_conll"
+lines_after_imports = 2
